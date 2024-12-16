@@ -1,4 +1,4 @@
-package edu.grinnell.csc207.util;
+package edu.grinnell.csc207.util.AArray;
 
 /**
  * An easy way to store key/value pairs.  We assume that other

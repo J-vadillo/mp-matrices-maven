@@ -1,4 +1,4 @@
-package edu.grinnell.csc207.util;
+package edu.grinnell.csc207.util.AArray;
 
 /**
  * Exceptions that indicate that a key is not in an associative array

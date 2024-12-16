@@ -1,4 +1,4 @@
-package edu.grinnell.csc207.util;
+package edu.grinnell.csc207.util.AArray;
 
 import static java.lang.reflect.Array.newInstance;
 
@@ -137,16 +137,40 @@ public class AssociativeArray<K, V> {
       keyAddress = find(key);
     } catch (KeyNotFoundException e) {
       this.size++;
-      if (pairs.length >= this.size) {
+
+      if (this.size >= this.pairs.length) {
         this.expand();
       } // Expand the array if needed
       this.pairs[this.size - 1] = newpair;
       return;
 
     } // if the key wasnt found add a new value
+
     this.pairs[keyAddress] = newpair;
     return;
-  } // set(K,V)
+
+  }
+
+  /**
+   * updates the key of a stored value.
+   * 
+   * @param oldKey the original key to update
+   * @param newKey the new key to use
+   * @throws KeyNotFoundException oldKey not found
+   */
+  public void updateKey(K oldKey, K newKey) throws KeyNotFoundException {
+    int keyloc;
+    try {
+      keyloc = find(oldKey);
+    } catch (KeyNotFoundException e) {
+      throw new KeyNotFoundException("the key to replace does not exist");
+    } // what to do if key was not found
+
+    KVPair<K, V> oldpair = this.pairs[keyloc];
+    KVPair<K, V> newPair = new KVPair<K, V>(newKey, oldpair.val);
+
+    this.pairs[keyloc] = newPair;
+  }// updateKey(K,V)
 
   /**
    * Get the value associated with key.
@@ -171,6 +195,22 @@ public class AssociativeArray<K, V> {
     return this.pairs[n].val;
 
   } // get(K)
+
+  /**
+   * gets the key at a given index.
+   * @param index the index to check
+   * @return the key 
+   * @throws Exception
+   */
+  public K getKey(int index) throws IndexOutOfBoundsException {
+    K thisKey;
+    try {
+      thisKey = this.pairs[index].key;
+    } catch (Exception e) {
+      throw new IndexOutOfBoundsException(" this index not exist");
+    } // what to do if key was not found
+    return thisKey;
+  } // getKey(K)
 
   /**
    * Determine if key appears in the associative array. Should
